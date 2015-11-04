@@ -33,7 +33,7 @@ namespace Bookinator_Data
 			File.Delete(opf);
 			doc.Save(opf);
 			ZipFile.CreateFromDirectory(tempFile, tempFile + ".epub");
-			Directory.Delete(tempFile);
+			Directory.Delete(tempFile, true);
 		}
 	}
 }
