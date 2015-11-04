@@ -18,6 +18,9 @@ namespace Bookinator
 			{
 				Console.WriteLine("{0} by {1}", book.Title, book.Creator);
 			}
+
+			var bookSaver = new BookSaver();
+			//bookSaver.Save(books.First());
 		}
 
 		private static List<Book> LoadBooksFromLibrary(IDataContext<Book> db)

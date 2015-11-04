@@ -23,7 +23,7 @@ namespace Bookinator_Data
 		public EpubContentReader(string file)
 		{
 			var bookZip = ZipFile.Open(file, ZipArchiveMode.Update);
-			var contentInfoFile = bookZip.Entries.Where(e => e.Name.EndsWith("content.opf")).FirstOrDefault();
+			var contentInfoFile = bookZip.Entries.Where(e => e.Name.EndsWith(".opf")).FirstOrDefault();
 			this.tempFile = @"C:\Users\pgathany\Desktop\Personal\Books\tempfile" + Path.GetFileNameWithoutExtension(file) + ".odf";
 			contentInfoFile.ExtractToFile(tempFile);
 			var doc = XDocument.Load(tempFile);

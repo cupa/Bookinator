@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Book.cs" />
+    <Compile Include="BookSaver.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="IContentReader.cs" />
     <Compile Include="JsonDatabase.cs" />
