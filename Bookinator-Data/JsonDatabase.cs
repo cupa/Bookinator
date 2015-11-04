@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Bookinator_Data.FileHelpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,11 +23,14 @@ namespace Bookinator_Data
 		private string dbLocation;
 		private List<T> items;
 		private int NextID = 1;
+		private IDirectoryHelper directoryHelper;
+
 		public JsonDataContext()
 		{
-			if(!Directory.Exists(location))
+			this.directoryHelper = new DirectoryHelper();
+			if (!directoryHelper.Exists(location))
 			{
-				Directory.CreateDirectory(location);
+				directoryHelper.CreateDirectory(location);
 			}
 			this.dbLocation = location + @"\" + typeof(T).Name + ".json";
 			if (!File.Exists(dbLocation))

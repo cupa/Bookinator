@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookinator_Data.FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -11,6 +12,13 @@ namespace Bookinator_Data
 {
 	public class BookSaver
 	{
+		private IDirectoryHelper directory;
+
+		public BookSaver()
+		{
+			this.directory = new DirectoryHelper();
+		}
+
 		public void Save(Book book)
 		{
 			var file = book.FilePath;
@@ -18,7 +26,7 @@ namespace Bookinator_Data
 			var tempFile = @"C:\Users\pgathany\Desktop\Personal\Books\tempDirectory" + Path.GetFileNameWithoutExtension(file);
 			bookZip.ExtractToDirectory(tempFile);
 
-			var tempBookFiles = Directory.GetFiles(tempFile, "*.opf", SearchOption.AllDirectories);
+			var tempBookFiles = directory.GetFiles(tempFile, "*.opf", SearchOption.AllDirectories);
 			var opf = tempBookFiles.FirstOrDefault(f => f.EndsWith(".opf"));
 			var doc = XDocument.Load(opf);
 			var elements = doc.Root.Elements();
@@ -33,7 +41,7 @@ namespace Bookinator_Data
 			File.Delete(opf);
 			doc.Save(opf);
 			ZipFile.CreateFromDirectory(tempFile, tempFile + ".epub");
-			Directory.Delete(tempFile, true);
+			directory.Delete(tempFile, true);
 		}
 	}
 }

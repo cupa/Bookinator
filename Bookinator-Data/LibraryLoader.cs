@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookinator_Data.FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,16 +11,18 @@ namespace Bookinator_Data
 	public class LibraryLoader
 	{
 		private IDataContext<Book> db;
+		private IDirectoryHelper directory;
 		public LibraryLoader(IDataContext<Book> db)
 		{
 			this.db = db;
+			this.directory = new DirectoryHelper();
 		}
 
 		public IEnumerable<Book> LoadLibrary()
 		{
 			var books = db.GetItems();
 			var bookpath = @"C:\Users\pgathany\Desktop\Personal\Books";
-			var bookfiles = Directory.GetFiles(bookpath);
+			var bookfiles = directory.GetFiles(bookpath);
 			foreach (var bookfile in bookfiles)
 			{
 				if (!books.Select(b => b.FilePath).Contains(bookfile))

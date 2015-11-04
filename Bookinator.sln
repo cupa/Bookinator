@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookinator-Data", "Bookinat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookinator-WindowsForms", "Bookinator-WindowsForms\Bookinator-WindowsForms.csproj", "{7E9ADAD9-C2FA-4A39-BC25-8156A0FFDF76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookinator-Test", "Bookinator-Test\Bookinator-Test.csproj", "{F78D4423-7667-4609-AF2B-1987A9E5553D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7E9ADAD9-C2FA-4A39-BC25-8156A0FFDF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9ADAD9-C2FA-4A39-BC25-8156A0FFDF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E9ADAD9-C2FA-4A39-BC25-8156A0FFDF76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78D4423-7667-4609-AF2B-1987A9E5553D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78D4423-7667-4609-AF2B-1987A9E5553D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78D4423-7667-4609-AF2B-1987A9E5553D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78D4423-7667-4609-AF2B-1987A9E5553D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
