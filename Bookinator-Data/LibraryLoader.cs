@@ -53,18 +53,16 @@ namespace Bookinator_Data
 
 		private void AddBook(string bookfile)
 		{
-			using (var contentReader = new EpubContentReader(bookfile))
+			var contentReader = new EpubContentReader(bookfile, new Settings(), new DirectoryHelper());
+			var title = contentReader.GetTitle();
+			var creator = contentReader.GetCreator();
+			var book = new Book()
 			{
-				var title = contentReader.GetTitle();
-				var creator = contentReader.GetCreator();
-				var book = new Book()
-				{
-					File = bookfile,
-					Title = title,
-					Creator = creator
-				};
-				db.Add(book);
-			}
+				File = bookfile,
+				Title = title,
+				Creator = creator
+			};
+			db.Add(book);
 		}
 	}
 }

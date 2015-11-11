@@ -12,5 +12,6 @@ namespace Bookinator_Data
 		public string BackupFile { get; set;}
 		public string Title { get; set; }
 		public string Creator { get; set; }
+		public string BookCover { get; set; }
 	}
 }

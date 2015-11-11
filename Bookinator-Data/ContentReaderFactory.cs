@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookinator_Data.FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Bookinator_Data
 	{
 		public IContentReader GetForFile(string FilePath)
 		{
-			return new EpubContentReader(FilePath);
+			return new EpubContentReader(FilePath, new Settings(), new DirectoryHelper());
 		}
 	}
 }

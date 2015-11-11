@@ -20,7 +20,7 @@ namespace Bookinator_Data
 		{
 			LibraryDirectory = @"C:\Users\pgathany\Desktop\Personal\Books";
 			BackupDirectory = @"C:\Users\pgathany\Desktop\Personal\Backup";
-			TempDirectory = @"C:\Users\pgathany\Desktop\Personal\Temp";
+			TempDirectory = System.IO.Path.GetTempPath();
 			DataDirectory = @"C:\Users\pgathany\Desktop\Personal\Json";
 		}
 	}
