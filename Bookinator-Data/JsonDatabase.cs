@@ -47,7 +47,7 @@ namespace Bookinator_Data
 		public JsonDataContext(SettingsBase settings)
 		{
 			this.directoryHelper = new DirectoryHelper();
-			location = settings.DataDirectory;
+			location = @"C:\Users\pgathany\Desktop\Personal\Json";
 			if (!directoryHelper.Exists(location))
 			{
 				directoryHelper.CreateDirectory(location);

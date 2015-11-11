@@ -47,6 +47,7 @@ namespace Bookinator_WindowsForms
 			browseFileDialog.InitialDirectory = new Settings().LibraryDirectory;
 			if(browseFileDialog.ShowDialog() == DialogResult.OK)
 			{
+				DeleteEverythingInTemp();
 				var fileName = browseFileDialog.FileName.ToString();
 				FilePath.Text = fileName;
 				var contentReaderFactory = new ContentReaderFactory();

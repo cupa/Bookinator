@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +11,6 @@ namespace Bookinator_Data
 	public abstract class SettingsBase
 	{
 		public string LibraryDirectory { get; set; }
-		public string BackupDirectory { get; set; }
-		public string DataDirectory { get; set; }
 		public string TempDirectory { get; set; }
 	}
 
@@ -18,10 +18,17 @@ namespace Bookinator_Data
 	{
 		public Settings()
 		{
-			LibraryDirectory = @"C:\Users\pgathany\Desktop\Personal\Books";
-			BackupDirectory = @"C:\Users\pgathany\Desktop\Personal\Backup";
-			TempDirectory = System.IO.Path.GetTempPath();
-			DataDirectory = @"C:\Users\pgathany\Desktop\Personal\Json";
+			var defaultLibrary = ConfigurationManager.AppSettings["DefaultLibrary"];
+			if(string.IsNullOrEmpty(defaultLibrary))
+			{
+				defaultLibrary = @"C:\";
+			}
+			LibraryDirectory = defaultLibrary;
+			TempDirectory = System.IO.Path.GetTempPath() + @"\Bookinator";
+			if(!Directory.Exists(TempDirectory))
+			{
+				Directory.CreateDirectory(TempDirectory);
+			}
 		}
 	}
 }
