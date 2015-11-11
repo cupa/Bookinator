@@ -8,7 +8,8 @@ namespace Bookinator_Data
 {
 	public class Book : Entity
 	{
-		public string FilePath { get; set; }
+		public string File { get; set; }
+		public string BackupFile { get; set;}
 		public string Title { get; set; }
 		public string Creator { get; set; }
 	}

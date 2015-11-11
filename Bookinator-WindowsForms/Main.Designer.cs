@@ -37,6 +37,7 @@
 			// BookList
 			// 
 			this.BookList.AccessibleName = "BookList";
+			this.BookList.AllowUserToOrderColumns = true;
 			this.BookList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.BookList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,

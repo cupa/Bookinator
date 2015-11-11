@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -47,12 +48,15 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookSaver.cs" />
+    <Compile Include="ContentReaderFactory.cs" />
     <Compile Include="FileHelpers\DirectoryHelper.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="FileHelpers\FileHelper.cs" />
     <Compile Include="IContentReader.cs" />
     <Compile Include="JsonDatabase.cs" />
     <Compile Include="LibraryLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

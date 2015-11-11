@@ -21,7 +21,7 @@ namespace Bookinator_Data
 
 		public void Save(Book book)
 		{
-			var file = book.FilePath;
+			var file = book.File;
 			var bookZip = ZipFile.Open(file, ZipArchiveMode.Update);
 			var tempFile = @"C:\Users\pgathany\Desktop\Personal\Books\tempDirectory" + Path.GetFileNameWithoutExtension(file);
 			bookZip.ExtractToDirectory(tempFile);

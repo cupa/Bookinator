@@ -12,20 +12,23 @@ namespace Bookinator_Data
 	{
 		private IDataContext<Book> db;
 		private IDirectoryHelper directory;
-		public LibraryLoader(IDataContext<Book> db)
+		private SettingsBase settings;
+
+		public LibraryLoader(IDataContext<Book> db, SettingsBase settings)
 		{
 			this.db = db;
 			this.directory = new DirectoryHelper();
+			this.settings = settings;
 		}
 
 		public IEnumerable<Book> LoadLibrary()
 		{
 			var books = db.GetItems();
-			var bookpath = @"C:\Users\pgathany\Desktop\Personal\Books";
+			var bookpath = settings.LibraryDirectory;
 			var bookfiles = directory.GetFiles(bookpath);
 			foreach (var bookfile in bookfiles)
 			{
-				if (!books.Select(b => b.FilePath).Contains(bookfile))
+				if (!books.Select(b => b.File).Contains(bookfile))
 				{
 					AddBook(bookfile);
 				}
@@ -37,7 +40,7 @@ namespace Bookinator_Data
 
 		private void RemoveDeletedBooks(List<Book> books, string[] bookfiles)
 		{
-			var deletedBooks = books.Where(b => !bookfiles.Contains(b.FilePath));
+			var deletedBooks = books.Where(b => !bookfiles.Contains(b.File));
 			if (deletedBooks.Any())
 			{
 				for (var i = deletedBooks.Count() - 1; i >= 0; i--)
@@ -56,7 +59,7 @@ namespace Bookinator_Data
 				var creator = contentReader.GetCreator();
 				var book = new Book()
 				{
-					FilePath = bookfile,
+					File = bookfile,
 					Title = title,
 					Creator = creator
 				};

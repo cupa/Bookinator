@@ -16,8 +16,9 @@ namespace Bookinator_WindowsForms
 		public Main()
 		{
 			InitializeComponent();
-			var context = new JsonDataContext<Book>();
-			var books = new LibraryLoader(context).LoadLibrary();
+			var settings = new Settings();
+			var context = new JsonDataContext<Book>(settings);
+			var books = new LibraryLoader(context, settings).LoadLibrary();
 			BookList.DataSource = books.Select(b => new DisplayBook { Title = b.Title, Creator = b.Creator }).ToList();
 		}
 

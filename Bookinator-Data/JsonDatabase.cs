@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace Bookinator_Data
 {
+	public interface IDataContextFactory
+	{
+		IDataContext<T> Get<T>() where T : Entity;
+	}
+
 	public interface IDataContext<T> where T : Entity
 	{
 		List<T> GetItems();
@@ -17,17 +22,32 @@ namespace Bookinator_Data
 		void Save();
 	}
 
+	public class JsonDataContextFactory : IDataContextFactory
+	{
+		private SettingsBase settings;
+
+		public JsonDataContextFactory(SettingsBase settings)
+		{
+			this.settings = settings;
+		}
+		public IDataContext<T> Get<T>() where T : Entity
+		{
+			return new JsonDataContext<T>(settings);
+		}
+	}
+
 	public class JsonDataContext<T> : IDataContext<T> where T : Entity
 	{
-		private string location = @"C:\Users\pgathany\Desktop\Personal\Json";
+		private string location;
 		private string dbLocation;
 		private List<T> items;
 		private int NextID = 1;
 		private IDirectoryHelper directoryHelper;
 
-		public JsonDataContext()
+		public JsonDataContext(SettingsBase settings)
 		{
 			this.directoryHelper = new DirectoryHelper();
+			location = settings.DataDirectory;
 			if (!directoryHelper.Exists(location))
 			{
 				directoryHelper.CreateDirectory(location);
@@ -51,6 +71,11 @@ namespace Bookinator_Data
 			{
 				NextID = items.Select(b => (b as Entity).ID).Max() + 1;
 			}
+		}
+
+		public T GetByID(int ID)
+		{
+			return items.SingleOrDefault(i => i.ID == ID);
 		}
 
 		public List<T> GetItems()
