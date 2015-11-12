@@ -121,9 +121,14 @@ namespace Bookinator_Data
 					File.Copy(book.BookCover, Path.Combine(Path.GetDirectoryName(opf), newCoverName));
 				}
 			}
-
 			File.Delete(opf);
 			doc.Save(opf);
+
+			OverwriteEpub(file, tempFile);
+		}
+
+		private void OverwriteEpub(string file, string tempFile)
+		{
 			File.Delete(file);
 			using (var zip = new Ionic.Zip.ZipFile())
 			{
@@ -139,7 +144,6 @@ namespace Bookinator_Data
 				content.CompressionLevel = Ionic.Zlib.CompressionLevel.None;
 				zip.Save(file);
 			}
-			//ZipFile.CreateFromDirectory(tempFile, file);
 			directory.Delete(tempFile, true);
 		}
 	}
