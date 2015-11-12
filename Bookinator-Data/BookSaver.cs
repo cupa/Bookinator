@@ -95,6 +95,8 @@ namespace Bookinator_Data
 					var coverExtension = Path.GetExtension(book.BookCover).Replace(".", "");
 					var coverMediaType = (coverExtension.StartsWith("jp") ? "image/jpeg" : "image/png");
 					var newCover = Path.ChangeExtension(coverLocation, coverExtension);
+					var localCoverPath = Path.ChangeExtension(coverHref, coverExtension);
+					coverHrefElement.Value = localCoverPath;
 					File.Copy(book.BookCover, newCover);
 					var mediaTypeAttr = coverManifest.Attribute("media-type");
 					if(mediaTypeAttr != null)
