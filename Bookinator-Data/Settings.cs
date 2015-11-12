@@ -24,7 +24,7 @@ namespace Bookinator_Data
 				defaultLibrary = @"C:\";
 			}
 			LibraryDirectory = defaultLibrary;
-			TempDirectory = System.IO.Path.GetTempPath() + @"\Bookinator";
+			TempDirectory = Path.Combine(System.IO.Path.GetTempPath(), @"Bookinator");
 			if(!Directory.Exists(TempDirectory))
 			{
 				Directory.CreateDirectory(TempDirectory);

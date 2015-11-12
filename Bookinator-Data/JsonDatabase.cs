@@ -24,15 +24,12 @@ namespace Bookinator_Data
 
 	public class JsonDataContextFactory : IDataContextFactory
 	{
-		private SettingsBase settings;
-
-		public JsonDataContextFactory(SettingsBase settings)
+		public JsonDataContextFactory()
 		{
-			this.settings = settings;
 		}
 		public IDataContext<T> Get<T>() where T : Entity
 		{
-			return new JsonDataContext<T>(settings);
+			return new JsonDataContext<T>();
 		}
 	}
 
@@ -44,7 +41,7 @@ namespace Bookinator_Data
 		private int NextID = 1;
 		private IDirectoryHelper directoryHelper;
 
-		public JsonDataContext(SettingsBase settings)
+		public JsonDataContext()
 		{
 			this.directoryHelper = new DirectoryHelper();
 			location = @"C:\Users\pgathany\Desktop\Personal\Json";

@@ -25,7 +25,7 @@ namespace Bookinator
 
 		private static List<Book> LoadBooksFromLibrary(IDataContext<Book> db)
 		{
-			var loader = new LibraryLoader(db);
+			var loader = new LibraryLoader(db, new Settings());
 			return loader.LoadLibrary().ToList();
 		}
 	}

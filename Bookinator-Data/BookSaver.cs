@@ -61,7 +61,7 @@ namespace Bookinator_Data
 		{
 			var file = book.File;
 			var bookZip = ZipFile.Open(file, ZipArchiveMode.Update);
-			var tempFile = TempPath + Path.GetFileNameWithoutExtension(file);
+			var tempFile = Path.Combine(TempPath, Path.GetFileNameWithoutExtension(file) + "SavingTemp");
 			bookZip.ExtractToDirectory(tempFile);
 			bookZip.Dispose();
 
@@ -92,24 +92,52 @@ namespace Bookinator_Data
 				if (coverLocation != book.BookCover)
 				{
 					File.Delete(coverLocation);
-					File.Copy(book.BookCover, coverLocation);
+					var coverExtension = Path.GetExtension(book.BookCover).Replace(".", "");
+					var coverMediaType = (coverExtension.StartsWith("jp") ? "image/jpeg" : "image/png");
+					var newCover = Path.ChangeExtension(coverLocation, coverExtension);
+					File.Copy(book.BookCover, newCover);
+					var mediaTypeAttr = coverManifest.Attribute("media-type");
+					if(mediaTypeAttr != null)
+					{
+						mediaTypeAttr.Value = coverMediaType;
+					} else
+					{
+						coverManifest.Add(new XAttribute("media-type", coverMediaType));
+					}
+
 				}
 			} else
 			{
 				if(!string.IsNullOrEmpty(book.BookCover))
 				{
-					metadata.Add(new XElement("meta", new XAttribute("name", "cover"), new XAttribute("content", "bookinator-cover")));
+					var coverExtension = Path.GetExtension(book.BookCover).Replace(".", "");
+					var mediaType = (coverExtension.StartsWith("jp") ? "image/jpeg" : "image/png");
+					metadata.Add(new XElement("meta", new XAttribute("name", "cover"), new XAttribute("content", "bookinatorcover")));
 					var manifest = elements.Where(e => e.Name.LocalName == "manifest").FirstOrDefault();
-					var newCoverName = "bookinator-cover." + Path.GetExtension(book.BookCover);
-					manifest.Add(new XElement("item", new XAttribute("id", "bookinator-cover"), new XAttribute("href", newCoverName)));
-					File.Move(book.BookCover, Path.Combine(Path.GetDirectoryName(opf), newCoverName));
+					var newCoverName = "bookinatorcover" + Path.GetExtension(book.BookCover);
+					manifest.AddFirst(new XElement("item", new XAttribute("id", "bookinatorcover"), new XAttribute("href", newCoverName), new XAttribute("media-type", mediaType)));
+					File.Copy(book.BookCover, Path.Combine(Path.GetDirectoryName(opf), newCoverName));
 				}
 			}
 
 			File.Delete(opf);
 			doc.Save(opf);
 			File.Delete(file);
-			ZipFile.CreateFromDirectory(tempFile, file);
+			using (var zip = new Ionic.Zip.ZipFile())
+			{
+				var mime = zip.AddEntry("mimetype", "application/epub+zip", Encoding.ASCII);
+				zip.UseZip64WhenSaving = Ionic.Zip.Zip64Option.Never;
+				mime.CompressionLevel = Ionic.Zlib.CompressionLevel.None;
+				mime.CompressionMethod = Ionic.Zip.CompressionMethod.None;
+				var metaDir = Path.Combine(tempFile, "META-INF");
+				var meta = zip.AddDirectory(metaDir, "META-INF");
+				meta.CompressionLevel = Ionic.Zlib.CompressionLevel.None;
+				var contentDir = Path.Combine(tempFile, "OEBPS");
+				var content = zip.AddDirectory(contentDir, "OEBPS");
+				content.CompressionLevel = Ionic.Zlib.CompressionLevel.None;
+				zip.Save(file);
+			}
+			//ZipFile.CreateFromDirectory(tempFile, file);
 			directory.Delete(tempFile, true);
 		}
 	}
